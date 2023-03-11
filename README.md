@@ -80,6 +80,7 @@ cd OpenROAD-flow-scripts
 git checkout master
 git pull
 git submodule update
+./build_openroad.sh --local --clean
 ```
 
 
@@ -118,6 +119,7 @@ cp results/asap7/ibex/base/6_1_merged.gds results/asap7/ibex/base/6_final.gds
 
  ```
 
+> The build time is highly dependent on the system hardware. The desktop for the above tests contains 8 cores and 16 Gb of ram 
 
  OpenROAD offers an interactive to analyse the generated GDSII and the gui is launched using
 
@@ -211,8 +213,11 @@ An example of the reported area is
 Design area 2489 u^2 45% utilization.
 ```
 
-## Understanding DRC Using Klayout
+### Performing DRC on the final GDSII using KLayout
 
+> Everything discussed in this section is experimental and NOT from ORFS. 
+
+> These tests were carried out on asap7/gcd design as the DRC check takes a huge time to run on the asap7/ ibex design
 
 The DRC file structure is as follows 
 
@@ -224,10 +229,9 @@ The DRC file structure is as follows
 
 On running the drc for `asap7/gds` ,`6_drc_count.rpt` gives the count of 348 violations and their respective descriptions are in `6_drc.lyrdb`
 
-
 These violations can be seen in detail by running the  `.lydrc` script in Klayout by
 - Launch klayout
-- open the `6_1_merged.gds` file produced from 
+- open the `6_final.gds` file produced from 
 `make DESIGN_CONFIG=./designs/asap7/gcd/config.mk`
 - under the ` tools -> DRC -> new DRC` script import the `asap7.lydrc` file and run the drc check.
 
@@ -235,5 +239,16 @@ This results in a GUI tool listing out all the drc violations with their count, 
 
 ![directory](resources/test4.png)
 
-one example of the violations reported is `M1.S.6` wich requires "Minimum corner-to-corner spacing between two M1 polygons"
-and as seen in the `gui` and reported error in `lyrdb` file it matches the `pdk drc` document
+These errors currently are due to the incomplete definitions in the tech LEF file and a detailed discussion on this topic can be found [here](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/discussions/854)
+
+### Understanding LEF files 
+
+Reference material 
+
+- [https://www.ispd.cc/contests/18/lefdefref.pdf](https://www.ispd.cc/contests/18/lefdefref.pdf)
+- [http://coriolis.lip6.fr/doc/lefdef/lefdefref/LEFSyntax.html](http://coriolis.lip6.fr/doc/lefdef/lefdefref/LEFSyntax.html)
+- [https://redirect.cs.umbc.edu/~cpatel2/links/641/slides/lect04_LEF.pdf](https://redirect.cs.umbc.edu/~cpatel2/links/641/slides/lect04_LEF.pdf)
+
+
+
+
