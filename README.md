@@ -94,7 +94,7 @@ Change your current directory to the flow directory.
 ```
 cd flow
 ```
-
+The automatic flow is based on the `Makefile` setup.  
 Uncomment the ` DESIGN_CONFIG=./designs/asap7/ibex/config.mk` line in the makefile
 
 ```
@@ -129,6 +129,9 @@ cp results/asap7/ibex/base/6_1_merged.gds results/asap7/ibex/base/6_final.gds
 
 ![GUI](resources/img1.png)
 
+## Interactive commands
+`make DESIGN_CONFIG=.path/config.mk command`   
+commad :synth, floorplan etc. 
 
 ## Understanding the directory structure
 
