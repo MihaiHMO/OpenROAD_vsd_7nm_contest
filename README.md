@@ -145,7 +145,18 @@ The gui is launched using:
  
  <stage>: synth, floorplan, cts etc. 
  ```
- 
+## Stages - usefull info 
+1. Synthesis - check logs for details regarding the tools and parameters, results for list of components and timings
+2. Floorplan  
+- IO placement, macro place, tapcell place, pdn creation 
+- <ORFS_PATH>/platforms/<PDK_NAME>/openRoad/pdn/grid_strategy-M2-M5-M7.tcl - can be used to understand the grid strategy
+
+4. Place - will do :IO placement, global gate place, resizer (for optimization) , detailed placement 
+5. CTS -  synthesize clock buffers to balance and meet the timings and skew 
+6. Routing - Global routing (FastRoute) defines min-max layers, and checked congestion , detailed routing (TritoneRoute) completes all connections based on track assignments and IO place, tries to fit in the DRC rules. 
+7. Final step: parasitic extraction using Open OCX , final timming checks and sign off 
+   - statistics and reports can be checke in the `reports` folder
+8. DRC and LVS checks are done with files exported from Klayout
 
 ## Understanding the directory structure
 
@@ -158,6 +169,8 @@ The three major metrics to understand the performance and functionality of the d
 - Timing ( Target -> worst negative slack = O)
 - Power  ( Lower the better)
 - Design Area ( Lower the better )
+
+The metrics can be analyed from the reports/logs folders or interactivly in the GUI. 
 
 ### Reporting and understanding the timing results
 
