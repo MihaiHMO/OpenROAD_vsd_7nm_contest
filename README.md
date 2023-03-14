@@ -94,7 +94,10 @@ Change your current directory to the flow directory.
 ```
 cd flow
 ```
-The automatic flow is based on the `Makefile` setup.  
+The automatic flow is based on the `Makefile` setup, `config.mk` from `designs` folder and `config.mk` from `platforms` folder.  
+The `Makefile` contains the stages of the flow and this is very easy to track and understand.  
+For advanced users the `scripts` folder contains more detailed scripts that control the flow.  
+
 Uncomment the ` DESIGN_CONFIG=./designs/asap7/ibex/config.mk` line in the makefile
 
 ```
@@ -102,7 +105,7 @@ Uncomment the ` DESIGN_CONFIG=./designs/asap7/ibex/config.mk` line in the makefi
  DESIGN_CONFIG=./designs/asap7/ibex/config.mk
 # DESIGN_CONFIG=./designs/asap7/aes/config.mk
 ```
->Note: this is only for the ibex processor using asap7, other designs will have their other respective design files
+>Note: this is only for the `ibex` processor using `asap7`, other designs will have their other respective design files
 
 run make
 
@@ -110,28 +113,39 @@ run make
 make
 ```
 
-And thats it!!! with a single command OpenROAD takes care of converting the RTL to GDSII. It took about 15 minutes on my machine to have the final gds and the process completes with the message.
+It took about 15 minutes on my machine to have the final gds and the process completes with the message.
  
  ```
 [INFO] Writing out GDS/OAS 'results/asap7/ibex/base/6_1_merged.gds'
-Elapsed time: 0:01.96[h:]min:sec. CPU time: user 1.82 sys 0.14 (100%). Peak memory: 475528KB.
+Elapsed time: 0:03.43[h:]min:sec. CPU time: user 2.85 sys 0.29 (91%). Peak memory: 551844KB.
 cp results/asap7/ibex/base/6_1_merged.gds results/asap7/ibex/base/6_final.gds
 
  ```
 
-> The build time is highly dependent on the system hardware. The desktop for the above tests contains 8 cores and 16 Gb of ram 
+> The build time is highly dependent on the system hardware. The desktop for the above tests contains 8 cores and 12 Gb of ram 
 
- OpenROAD offers an interactive to analyse the generated GDSII and the gui is launched using
-
- ```
- make gui_final
- ```
+The automatic flow it generates by default `.odb` files for the final result, in case `.def` files are needed the make command must contain `-def` switch.
 
 ![GUI](resources/img1.png)
 
 ## Interactive commands
-`make DESIGN_CONFIG=.path/config.mk command`   
-commad :synth, floorplan etc. 
+OpenROAD offers an interactive mode to analyse the different steps: 
+
+```
+make DESIGN_CONFIG=.<PATH>/config.mk <command>`   
+<command> :synth, floorplan, cts, gui_<stage> etc. 
+```
+
+In case at a particular stage a modification is needed, the `designs/../config.mk` can be modified and the effect can be analyses.  
+
+The gui is launched using:
+
+ ```
+ make gui_<stage>
+ 
+ <stage>: synth, floorplan, cts etc. 
+ ```
+ 
 
 ## Understanding the directory structure
 
