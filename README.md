@@ -243,6 +243,19 @@ An example of the reported area is
 Design area 2489 u^2 45% utilization.
 ```
 
+## GUI
+### CTS 
+To select the clock nets use `Find` with clock names and filter `Nets` items.  
+![image](https://user-images.githubusercontent.com/49897923/225246344-2ead7e4f-2dbc-43b5-9b92-763f298087a0.png)
 
+Selecting `Timing Report` tab on the right hand side of the GUI will list the timings related to selected clock nets.  
+![image](https://user-images.githubusercontent.com/49897923/225245848-1a956a6a-459c-4c81-9613-e0fde814e74e.png)
 
+### Floorplan and routing
+For placement and routing the `Heat maps` f0r `Placement congestion` and `Routing congenstion`
+
+### Final design
+Cab be explored also for timings and congestion.  
+Additional to open the final design in Klayout can be used the following command :  
+`klayout -e -nn ./platforms/asap7/KLayout/asap7.lyt -l ./platforms/asap7/KLayout/asap7.lyp ./results/asap7/ibex/base/6_final.gds `
 
