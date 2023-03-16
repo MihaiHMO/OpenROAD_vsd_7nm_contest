@@ -259,3 +259,51 @@ Cab be explored also for timings and congestion.
 Additional to open the final design in Klayout can be used the following command :  
 `klayout -e -nn ./platforms/asap7/KLayout/asap7.lyt -l ./platforms/asap7/KLayout/asap7.lyp ./results/asap7/ibex/base/6_final.gds `
 
+## Macro placement
+```
+export SYNTH_HIERARCHICAL = 1
+export RTLMP_FLOW = True
+
+# RTL_MP Settings
+export RTLMP_MAX_INST = 30000
+export RTLMP_MIN_INST = 5000
+export RTLMP_MAX_MACRO = 16
+export RTLMP_MIN_MACRO = 4
+export ADDITIONAL_LEFS = $(PLATFORM_DIR)/lef/fakeram45_256x16.lef
+export ADDITIONAL_LIBS = $(PLATFORM_DIR)/lib/fakeram45_256x16.lib
+export PLACE_PINS_ARGS = -exclude left:0-500 -exclude left:1000-1500: -exclude right:* -exclude top:* -exclude bottom:*
+export MACRO_PLACE_HALO = 10 10
+export MACRO_PLACE_CHANNEL = 20 20
+
+```
+## Quality of Results  
+OpenROAD enables QoR tracking trough metrics 2.1 feature.
+https://openroad-flow-scripts.readthedocs.io/en/latest/contrib/Metrics.html
+
+The logging infrastructure supports generating a JSON file containing design metrics (e.g., area or slack).  
+To keep track of the quality of the results, we maintain inside each design folder two files:  
+- `metadata-base-ok.json` which contains all the relevant information extracted from the “golden” execution of the flow (i.e., last known good result).
+- `rules.json` which holds a set of rules that we use to evaluate new executions when a change is made.  
+
+Command to compare the results: `make metadata`  
+If all the metrics are passed you can tighten the rules by updating `make update_ok`.  
+
+## Autotuner
+Autotuner is an open, ML-based, hyperparameter framework and engine to the OpenROAD RTL-GDSII flow.  The  AutoTuner is an autonomous, parameter tuning framework using Ray (https://www.ibm.com/cloud/blog/ray-on-ibm-cloud-code-engine) for commercial and academic RTL-to-GDS flows.
+https://openroad-flow-scripts.readthedocs.io/en/latest/user/InstructionsForAutoTuner.html
+
+Setup for local installation:
+```
+pip3 install -U --user 'ray[default,tune]==1.11.0' ax-platform hyperopt nevergrad optuna pandas
+pip3 install -U --user colorama==0.4.4 bayesian-optimization==1.4.0
+```
+Setup for clound : 
+https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/tree/master/tools/AutoTuner
+
+Results:
+After running Autotuner we have a best performance indication and the output is logged into `/logs/<technology>/<design_name>/<test-tune-date-time_dir>/autotuner-best-xxx-.json` file
+This file can be used with tensorboard gui `tensorboard --logdir = <logpath>` and open the provided url.   
+
+## Issue 
+Can be generated on github but must contain an test case document.
+This can be obtained with `make <stage>_issue`.  <stage> - the name of the tcl file from `/scripts` folder.
