@@ -297,12 +297,26 @@ Setup for local installation:
 pip3 install -U --user 'ray[default,tune]==1.11.0' ax-platform hyperopt nevergrad optuna pandas
 pip3 install -U --user colorama==0.4.4 bayesian-optimization==1.4.0
 ```
-Setup for clound : 
+Setup for cloud : 
 https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/tree/master/tools/AutoTuner  
+Autotuner runs from `flow/util` directory - check the documentation.  
+```
+python3 distributed.py --design ibex --platform asap7 \
+                       --config ../designs/asap7/ibex/autotuner.json \
+                       tune
 
+```
 Results:  
 After running Autotuner we have a best performance indication and the output is logged into `/logs/<technology>/<design_name>/<test-tune-date-time_dir>/autotuner-best-xxx-.json` file.  
+![image](https://user-images.githubusercontent.com/49897923/225735534-bd31036f-31e4-4e9f-9c93-2c356a626eb4.png)
+```
+2023-03-16 21:42:38,137	INFO tune.py:747 -- Total run time: 2025.49 seconds (2025.35 seconds for the tuning loop).
+[INFO TUN-0002] Best parameters found: {'_SDC_CLK_PERIOD': 435.7520794150866, 'CORE_UTILIZATION': 41, 'CORE_ASPECT_RATIO': 0.6047398852650901, 'CORE_MARGIN': 2, 'CELL_PAD_IN_SITES_GLOBAL_PLACEMENT': 1, 'CELL_PAD_IN_SITES_DETAIL_PLACEMENT': 2, '_FR_LAYER_ADJUST': 0.30103473460489677, 'PLACE_DENSITY_LB_ADDON': 0.9565761927656559, '_PINS_DISTANCE': 1, 'CTS_CLUSTER_SIZE': 178, 'CTS_CLUSTER_DIAMETER': 247, '_FR_FILE_PATH': '', '_FR_GR_OVERFLOW': 1}
+(save_best pid=16074) [INFO TUN-0003] Best parameters written to /home/mihaih/OpenROAD-flow-scripts/flow/logs/asap7/ibex/test-tune-2023-03-16-21-08-49/autotuner-best-fdb920f6.json
+
+```
 This file can be used with tensorboard gui `tensorboard --logdir = <logpath>` and open the provided url.   
+![image](https://user-images.githubusercontent.com/49897923/225740350-b7b81658-e802-4bdf-8bbf-91ecda40dbef.png)
 
 ## Issues 
 Can be generated on github but must contain an test case document.  
