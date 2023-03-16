@@ -289,8 +289,8 @@ Command to compare the results: `make metadata`
 If all the metrics are passed you can tighten the rules by updating `make update_ok`.  
 
 ## Autotuner
-Autotuner is an open, ML-based, hyperparameter framework and engine to the OpenROAD RTL-GDSII flow.  The  AutoTuner is an autonomous, parameter tuning framework using Ray (https://www.ibm.com/cloud/blog/ray-on-ibm-cloud-code-engine) for commercial and academic RTL-to-GDS flows.
-https://openroad-flow-scripts.readthedocs.io/en/latest/user/InstructionsForAutoTuner.html
+Autotuner is an open, ML-based, hyperparameter framework and engine to the OpenROAD RTL-GDSII flow.  The  AutoTuner is an autonomous, parameter tuning framework using Ray (https://www.ibm.com/cloud/blog/ray-on-ibm-cloud-code-engine) for commercial and academic RTL-to-GDS flows.  
+https://openroad-flow-scripts.readthedocs.io/en/latest/user/InstructionsForAutoTuner.html  
 
 Setup for local installation:
 ```
@@ -298,12 +298,12 @@ pip3 install -U --user 'ray[default,tune]==1.11.0' ax-platform hyperopt nevergra
 pip3 install -U --user colorama==0.4.4 bayesian-optimization==1.4.0
 ```
 Setup for clound : 
-https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/tree/master/tools/AutoTuner
+https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/tree/master/tools/AutoTuner  
 
-Results:
-After running Autotuner we have a best performance indication and the output is logged into `/logs/<technology>/<design_name>/<test-tune-date-time_dir>/autotuner-best-xxx-.json` file
+Results:  
+After running Autotuner we have a best performance indication and the output is logged into `/logs/<technology>/<design_name>/<test-tune-date-time_dir>/autotuner-best-xxx-.json` file.  
 This file can be used with tensorboard gui `tensorboard --logdir = <logpath>` and open the provided url.   
 
-## Issue 
-Can be generated on github but must contain an test case document.
-This can be obtained with `make <stage>_issue`.  <stage> - the name of the tcl file from `/scripts` folder.
+## Issues 
+Can be generated on github but must contain an test case document.  
+This can be obtained with `make <stage>_issue`.  <stage> - the name of the tcl file from `/scripts` folder.  
